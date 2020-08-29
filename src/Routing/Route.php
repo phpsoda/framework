@@ -186,8 +186,8 @@ class Route
      */
     public function prepareGates(array $gates)
     {
-        return array_map(function ($game) {
-            return self::GATES_NAMESPACE . $game;
+        return array_map(function ($gate) {
+            return self::GATES_NAMESPACE . ucfirst($gate . 'Gate');
         }, $gates);
     }
 

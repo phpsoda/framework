@@ -57,7 +57,15 @@ class Request
      */
     public static function createFromGlobals()
     {
-        return new static($_GET, $_POST, $_COOKIE, $_SERVER, $_SESSION ?? []);
+        switch ($_SERVER['CONTENT_TYPE']) {
+            case 'application/json':
+                $data = json_decode(file_get_contents('php://input'), true);
+                break;
+            default:
+                $data = $_POST;
+        }
+
+        return new static($_GET, $data, $_COOKIE, $_SERVER, $_SESSION ?? []);
     }
 
     /**
