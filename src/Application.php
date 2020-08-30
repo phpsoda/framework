@@ -47,13 +47,20 @@ class Application
         return self::$instance;
     }
 
+    public function singleton(string $className)
+    {
+        if (class_exists($className)) {
+            $this->singletons->set($className, $className::getInstance());
+        }
+    }
+
     /**
-     * @param string $key
-     * @param null $default
+     * @param string $className
+     * @param mixed $default
      * @return mixed|Singleton
      */
-    public function make(string $key, $default = null)
+    public function make(string $className, $default = null)
     {
-        return $this->singletons->get($key) ?? $default;
+        return $this->singletons->get($className) ?? $default;
     }
 }
