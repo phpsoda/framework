@@ -53,7 +53,7 @@ class Router
 
                 if (!$gate->handle($request)) {
                     return new JsonResponse([
-                        'message' => "{$gateName} is closed!",
+                        'message' => "Couldn't pass {$gateName}!",
                     ], 403);
                 }
             }
