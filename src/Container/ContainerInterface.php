@@ -1,16 +1,19 @@
 <?php
 
-namespace PHPSoda\Patterns;
+namespace PHPSoda\Container;
+
+use Countable;
+use IteratorAggregate;
 
 /**
- * Interface RegistryInterface
- * @package PHPSoda\Patterns
+ * Interface ContainerInterface
+ * @package PHPSoda\Container
  */
-interface RegistryInterface
+interface ContainerInterface extends IteratorAggregate, Countable
 {
     /**
      * @param string $key
-     * @return mixed
+     * @return bool
      */
     public function has(string $key);
 
@@ -24,13 +27,13 @@ interface RegistryInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @return static
+     * @return $this
      */
     public function set(string $key, $value);
 
     /**
      * @param string $key
-     * @return static
+     * @return $this
      */
-    public function remove(string $key);
+    public function clear(string $key);
 }

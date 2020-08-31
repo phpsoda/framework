@@ -2,24 +2,19 @@
 
 namespace PHPSoda;
 
-use PHPSoda\Patterns\Singleton;
-use PHPSoda\Patterns\SingletonRegistry;
+use PHPSoda\Container\Container;
 use PHPSoda\Routing\Router;
 
 /**
  * Class Application
  * @package PHPSoda
  */
-class Application
+class Application extends Container
 {
     /**
      * @var Router
      */
     public $router;
-    /**
-     * @var SingletonRegistry
-     */
-    private $singletons;
 
     /**
      * @var Application
@@ -31,8 +26,9 @@ class Application
      */
     private function __construct()
     {
+        parent::__construct();
+
         $this->router = new Router();
-        $this->singletons = new SingletonRegistry();
     }
 
     /**
@@ -45,22 +41,5 @@ class Application
         }
 
         return self::$instance;
-    }
-
-    public function singleton(string $className)
-    {
-        if (class_exists($className)) {
-            $this->singletons->set($className, $className::getInstance());
-        }
-    }
-
-    /**
-     * @param string $className
-     * @param mixed $default
-     * @return mixed|Singleton
-     */
-    public function make(string $className, $default = null)
-    {
-        return $this->singletons->get($className) ?? $default;
     }
 }
