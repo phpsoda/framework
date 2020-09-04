@@ -3,7 +3,7 @@
 namespace PHPSoda\Dependency;
 
 use ReflectionClass;
-use ReflectionParameter;
+use ReflectionException;
 
 class Inspector
 {
@@ -22,7 +22,8 @@ class Inspector
     }
 
     /**
-     * @return ReflectionParameter[]
+     * @return Parameter[]
+     * @throws ReflectionException
      */
     public function parameters()
     {
@@ -33,16 +34,28 @@ class Inspector
             return [];
         }
 
-        /**
-         * @var ReflectionParameter
-         */
         $parameters = $constructor->getParameters();
         $result = [];
 
         foreach ($parameters as $parameter) {
-            $result[$parameter->getName()] = $parameter->hasType() ? $parameter->getClass()->name : null;
+            $result[] = new Parameter(
+                $parameter->getName(),
+                $parameter->getType() ? new ParameterType($parameter->getType(), $parameter->getType()->isBuiltin()) : null,
+                $parameter->isOptional()
+            );
         }
 
         return $result;
+    }
+
+    /**
+     * @return Parameter[]
+     * @throws ReflectionException
+     */
+    public function noneOptionalParameters()
+    {
+        return array_filter($this->parameters(), function ($parameter) {
+            return !$parameter->isOptional();
+        });
     }
 }

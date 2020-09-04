@@ -2,6 +2,8 @@
 
 namespace PHPSoda\Routing;
 
+use PHPSoda\Application;
+use PHPSoda\Dependency\Manager;
 use PHPSoda\Http\JsonResponse;
 use PHPSoda\Http\Request;
 use PHPSoda\Http\Response;
@@ -31,15 +33,9 @@ class Router
         $this->currentRoute = $this->routes->getByRequest($request);
 
         if ($this->currentRoute !== null) {
-            $controllerName = $this->currentRoute->getControllerName();
+            $dependencyManager = new Manager(Application::getInstance());
 
-            if (!class_exists($controllerName)) {
-                return new JsonResponse([
-                    'message' => "Controller not found!",
-                ], 404);
-            }
-
-            $controller = new $controllerName();
+            $controller = $dependencyManager->resolve($this->currentRoute->getControllerName());
             $action = $this->currentRoute->getActionName();
 
             if (!method_exists($controller, $action)) {
@@ -49,7 +45,7 @@ class Router
             }
 
             foreach ($this->currentRoute->getGateNames() as $gateName) {
-                $gate = new $gateName();
+                $gate = $dependencyManager->resolve($gateName);
 
                 if (!$gate->handle($request)) {
                     return new JsonResponse([

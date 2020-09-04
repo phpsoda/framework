@@ -42,6 +42,10 @@ class Container implements ContainerInterface
      * @return mixed
      */
     public function get(string $key, $default = null) {
+        if (!$this->has($key)) {
+            return $default;
+        }
+
         $value = $this->items[$key];
 
         if ($value instanceof Closure) {
