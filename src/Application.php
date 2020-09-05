@@ -12,21 +12,26 @@ use PHPSoda\Routing\Router;
 class Application extends Container
 {
     /**
-     * @var Router
-     */
-    public $router;
-
-    /**
      * @var Application
      */
     private static $instance;
 
     /**
-     * Application constructor.
+     * @var string
      */
-    private function __construct()
+    private $basePath;
+
+    /**
+     * Application constructor.
+     * @param string|null $basePath
+     */
+    public function __construct(string $basePath = null)
     {
         parent::__construct();
+
+        if ($basePath) {
+            $this->setBasePath($basePath);
+        }
 
         $this->set('router', new Router());
     }
@@ -41,5 +46,24 @@ class Application extends Container
         }
 
         return self::$instance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBasePath(): string
+    {
+        return $this->basePath;
+    }
+
+    /**
+     * @param string $basePath
+     * @return Application
+     */
+    public function setBasePath(string $basePath): Application
+    {
+        $this->basePath = rtrim($basePath, '\/');
+
+        return $this;
     }
 }

@@ -21,13 +21,17 @@ class Router
 
     /**
      * Router constructor.
-     * @param array $routes
      */
-    public function __construct(array $routes = [])
+    public function __construct()
     {
-        $this->routes = new RouteBag($routes);
+        $this->routes = new RouteBag([]);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
     public function handle(Request $request): Response
     {
         $this->currentRoute = $this->routes->getByRequest($request);
@@ -62,15 +66,82 @@ class Router
         ], 404);
     }
 
-    public function getRoutes(): RouteBag
+    /**
+     * @param string $path
+     * @param string $handler
+     * @param array|string[] $methods
+     * @param array $gates
+     * @return Route
+     */
+    public static function createRoute(
+        string $path = Route::DEFAULT_PATH,
+        string $handler = Route::DEFAULT_CONTROLLER,
+        array $methods = Route::DEFAULT_METHODS,
+        array $gates = []
+    )
     {
-        return $this->routes;
+        $route = new Route($path, $handler, $methods, $gates);
+
+        return $route;
     }
 
-    public function setRoutes(array $routes): self
+    /**
+     * @param string $path
+     * @param string $handler
+     * @param array $gates
+     * @return Route
+     */
+    public static function get(
+        string $path = Route::DEFAULT_PATH,
+        string $handler = Route::DEFAULT_CONTROLLER,
+        array $gates = []
+    )
     {
-        $this->routes = new RouteBag();
+        return self::createRoute($path, $handler, ['GET'], $gates);
+    }
 
-        return $this;
+    /**
+     * @param string $path
+     * @param string $handler
+     * @param array $gates
+     * @return Route
+     */
+    public static function post(
+        string $path = Route::DEFAULT_PATH,
+        string $handler = Route::DEFAULT_CONTROLLER,
+        array $gates = []
+    )
+    {
+        return self::createRoute($path, $handler, ['POST'], $gates);
+    }
+
+    /**
+     * @param string $path
+     * @param string $handler
+     * @param array $gates
+     * @return Route
+     */
+    public static function put(
+        string $path = Route::DEFAULT_PATH,
+        string $handler = Route::DEFAULT_CONTROLLER,
+        array $gates = []
+    )
+    {
+        return self::createRoute($path, $handler, ['PUT'], $gates);
+    }
+
+    /**
+     * @param string $path
+     * @param string $handler
+     * @param array $gates
+     * @return Route
+     */
+    public static function delete(
+        string $path = Route::DEFAULT_PATH,
+        string $handler = Route::DEFAULT_CONTROLLER,
+        array $gates = []
+    )
+    {
+        return self::createRoute($path, $handler, ['DELETE'], $gates);
     }
 }
