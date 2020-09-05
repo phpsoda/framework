@@ -98,7 +98,7 @@ class Container implements ContainerInterface
      */
     public function offsetGet($offset)
     {
-        return $this->get($offset);
+        return $this->items[$offset];
     }
 
     /**
@@ -107,7 +107,7 @@ class Container implements ContainerInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->set($offset, $value);
+        $this->items[$offset] = $value;
     }
 
     /**
@@ -115,7 +115,9 @@ class Container implements ContainerInterface
      */
     public function offsetUnset($offset)
     {
-        $this->clear($offset);
+        if ($this->has($offset)) {
+            unset($this->items[$offset]);
+        }
     }
 
     /**
