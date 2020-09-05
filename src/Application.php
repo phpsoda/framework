@@ -28,7 +28,7 @@ class Application extends Container
     {
         parent::__construct();
 
-        $this->router = new Router();
+        $this->set('router', new Router());
     }
 
     /**
