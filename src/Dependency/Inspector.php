@@ -5,6 +5,10 @@ namespace PHPSoda\Dependency;
 use ReflectionClass;
 use ReflectionException;
 
+/**
+ * Class Inspector
+ * @package PHPSoda\Dependency
+ */
 class Inspector
 {
     /**

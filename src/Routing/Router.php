@@ -2,12 +2,17 @@
 
 namespace PHPSoda\Routing;
 
+use Exception;
 use PHPSoda\Application;
 use PHPSoda\Dependency\Manager;
 use PHPSoda\Http\JsonResponse;
 use PHPSoda\Http\Request;
 use PHPSoda\Http\Response;
 
+/**
+ * Class Router
+ * @package PHPSoda\Routing
+ */
 class Router
 {
     /**
@@ -28,6 +33,11 @@ class Router
         $this->routes = new RouteBag($routes);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
     public function handle(Request $request): Response
     {
         $this->currentRoute = $this->routes->getByRequest($request);
@@ -62,11 +72,18 @@ class Router
         ], 404);
     }
 
+    /**
+     * @return RouteBag
+     */
     public function getRoutes(): RouteBag
     {
         return $this->routes;
     }
 
+    /**
+     * @param array $routes
+     * @return $this
+     */
     public function setRoutes(array $routes): self
     {
         $this->routes = new RouteBag();

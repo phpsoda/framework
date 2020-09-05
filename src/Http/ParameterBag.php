@@ -2,6 +2,7 @@
 
 namespace PHPSoda\Http;
 
+use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
@@ -13,7 +14,7 @@ use Traversable;
  * Class ParameterBag
  * @package PHPSoda\Http
  */
-class ParameterBag implements IteratorAggregate, Countable, JsonSerializable
+class ParameterBag implements IteratorAggregate, Countable, JsonSerializable, ArrayAccess
 {
     /**
      * @var array
@@ -82,5 +83,42 @@ class ParameterBag implements IteratorAggregate, Countable, JsonSerializable
     public function jsonSerialize()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->parameters[$offset];
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->parameters[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        if ($this->has($offset)) {
+            unset($this->parameters[$offset]);
+        }
     }
 }

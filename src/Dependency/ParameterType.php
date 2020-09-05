@@ -2,6 +2,10 @@
 
 namespace PHPSoda\Dependency;
 
+/**
+ * Class ParameterType
+ * @package PHPSoda\Dependency
+ */
 class ParameterType
 {
     /**
@@ -13,6 +17,11 @@ class ParameterType
      */
     private $builtin;
 
+    /**
+     * ParameterType constructor.
+     * @param string $name
+     * @param bool $builtin
+     */
     public function __construct(string $name, bool $builtin)
     {
         $this->name = $name;
@@ -57,6 +66,9 @@ class ParameterType
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

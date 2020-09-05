@@ -5,6 +5,10 @@ namespace PHPSoda\Dependency;
 use Exception;
 use PHPSoda\Application;
 
+/**
+ * Class Manager
+ * @package PHPSoda\Dependency
+ */
 class Manager
 {
     /**

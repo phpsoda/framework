@@ -2,9 +2,11 @@
 
 namespace PHPSoda\Routing;
 
+use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use JsonSerializable;
 use PHPSoda\Http\Request;
 use Traversable;
 
@@ -12,7 +14,7 @@ use Traversable;
  * Class RouteBag
  * @package PHPSoda\Routing
  */
-class RouteBag implements IteratorAggregate, Countable
+class RouteBag implements ArrayAccess, IteratorAggregate, Countable, JsonSerializable
 {
     /**
      * @var Route[]
@@ -102,6 +104,41 @@ class RouteBag implements IteratorAggregate, Countable
     }
 
     /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->routes);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|Route
+     */
+    public function offsetGet($offset)
+    {
+        return $this->routes[$offset];
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->routes[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->routes[$offset]);
+    }
+
+    /**
      * @return ArrayIterator|Traversable
      */
     public function getIterator()
@@ -118,9 +155,9 @@ class RouteBag implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Route[]
+     * @return mixed|Route[]
      */
-    public function toArray()
+    public function jsonSerialize()
     {
         return $this->routes;
     }
