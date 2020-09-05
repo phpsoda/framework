@@ -57,7 +57,7 @@ class Request
      */
     public static function createFromGlobals()
     {
-        switch ($_SERVER['CONTENT_TYPE']) {
+        switch ($_SERVER['CONTENT_TYPE'] ?? '') {
             case 'application/json':
                 $data = json_decode(file_get_contents('php://input'), true);
                 break;
