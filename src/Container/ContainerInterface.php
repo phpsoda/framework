@@ -2,6 +2,7 @@
 
 namespace PHPSoda\Container;
 
+use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 
@@ -9,7 +10,7 @@ use IteratorAggregate;
  * Interface ContainerInterface
  * @package PHPSoda\Container
  */
-interface ContainerInterface extends IteratorAggregate, Countable
+interface ContainerInterface extends ArrayAccess, IteratorAggregate, Countable
 {
     /**
      * @param string $key
