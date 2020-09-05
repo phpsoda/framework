@@ -58,7 +58,7 @@ class Route
         $this->methods = $this->prepareMethods($methods);
         $this->gateNames = $this->prepareGates($gates);
 
-        Application::getInstance()->router->getRoutes()->add($this);
+        Application::getInstance()->get('router')->getRoutes()->add($this);
     }
 
     /**
