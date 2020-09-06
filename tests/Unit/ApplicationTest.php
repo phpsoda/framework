@@ -13,7 +13,7 @@ class ApplicationTest extends TestCase
      */
     public function testSetBasePath(string $basePath)
     {
-        $app = new Application($basePath);
+        $app = Application::initialize($basePath);
 
         self::assertEquals(rtrim($basePath, '\/'), $app->getBasePath());
     }
@@ -24,7 +24,7 @@ class ApplicationTest extends TestCase
      */
     public function testGetConfigPath(string $basePath)
     {
-        $app = new Application($basePath);
+        $app = Application::initialize($basePath);
 
         self::assertEquals($app->getBasePath() . DIRECTORY_SEPARATOR . 'config', $app->getConfigPath());
     }
@@ -35,7 +35,7 @@ class ApplicationTest extends TestCase
      */
     public function testGetConfigFilePath(string $basePath, string $file)
     {
-        $app = new Application($basePath);
+        $app = Application::initialize($basePath);
 
         self::assertEquals($app->getConfigPath() . DIRECTORY_SEPARATOR . $file, $app->getConfigFilePath($file));
     }
