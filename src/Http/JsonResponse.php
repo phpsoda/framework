@@ -14,7 +14,7 @@ class JsonResponse extends Response
      * @param int $status
      * @param array $headers
      */
-    public function __construct($data = null, int $status = 200, array $headers = [])
+    public function __construct($data, int $status = 200, array $headers = [])
     {
         parent::__construct(json_encode($data), $status, $headers);
 

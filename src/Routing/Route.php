@@ -2,267 +2,112 @@
 
 namespace PHPSoda\Routing;
 
+use Closure;
 use PHPSoda\Application;
-use PHPSoda\Http\Request;
+use PHPSoda\Helpers\ArrayHelper;
+use PHPSoda\Helpers\StringHelper;
 
 /**
  * Class Route
+ *
  * @package PHPSoda\Routing
  */
 class Route
 {
-    const CONTROLLERS_NAMESPACE = 'App\\Controllers\\';
-    const GATES_NAMESPACE = 'App\\Gates\\';
-    const CONTROLLER_SEPARATOR = '@';
-    const DEFAULT_PATH = '/';
-    const DEFAULT_CONTROLLER = 'ExampleController' . self::CONTROLLER_SEPARATOR . 'index';
-    const DEFAULT_METHODS = ['GET'];
+    const ACTION_DELIMITER = '@';
+    const ROUTE_PARAMETER_PATTERN = ':(\w+)';
+    const ROUTE_ARGUMENT_PATTERN = '(\w+)';
 
     /**
      * @var string
      */
-    protected $path;
-    /**
-     * @var string
-     */
-    protected $controllerName;
-    /**
-     * @var string
-     */
-    protected $actionName;
+    protected $uri;
     /**
      * @var array
      */
     protected $methods;
     /**
-     * @var array
+     * @var Closure|string
      */
-    protected $gateNames;
+    protected $action;
 
     /**
      * Route constructor.
-     * @param string $path
-     * @param string $handler
-     * @param array|string[] $methods
-     * @param array $gates
+     *
+     * @param string         $uri
+     * @param array          $methods
+     * @param Closure|string $action
      */
-    public function __construct(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $methods = self::DEFAULT_METHODS,
-        array $gates = []
-    )
+    public function __construct(string $uri, array $methods, $action)
     {
-        $this->parseHandler($handler);
-        $this->path = trim($path, '/');
-        $this->methods = $this->prepareMethods($methods);
-        $this->gateNames = $this->prepareGates($gates);
+        $this->setUri($uri);
+        $this->setMethods($methods);
+        $this->setAction($action);
+    }
 
-        Application::getInstance()->get('router')->getRoutes()->add($this);
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return StringHelper::replace(self::ROUTE_PARAMETER_PATTERN, self::ROUTE_ARGUMENT_PATTERN, $this->uri);
+    }
+
+    public function getParams(): array
+    {
+        preg_match_all('#' . self::ROUTE_PARAMETER_PATTERN . '#', $this->uri, $routeParams);
+
+        return $routeParams[1];
     }
 
     /**
      * @param string $path
-     * @param string $handler
-     * @param array|string[] $methods
-     * @param array $gates
-     * @return static
-     */
-    public static function create(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $methods = self::DEFAULT_METHODS,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, $methods, $gates);
-    }
-
-    /**
-     * @param string $path
-     * @param string $handler
-     * @param array $gates
-     * @return static
-     */
-    public static function get(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, ['GET'], $gates);
-    }
-
-    /**
-     * @param string $path
-     * @param string $handler
-     * @param array $gates
-     * @return static
-     */
-    public static function post(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, ['POST'], $gates);
-    }
-
-    /**
-     * @param string $path
-     * @param string $handler
-     * @param array $gates
-     * @return static
-     */
-    public static function put(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, ['PUT'], $gates);
-    }
-
-    /**
-     * @param string $path
-     * @param string $handler
-     * @param array $gates
-     * @return static
-     */
-    public static function delete(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, ['DELETE'], $gates);
-    }
-
-    /**
-     * @param string $path
-     * @param string $handler
-     * @param array $gates
-     * @return static
-     */
-    public static function head(
-        string $path = self::DEFAULT_PATH,
-        string $handler = self::DEFAULT_CONTROLLER,
-        array $gates = []
-    )
-    {
-        return new static($path, $handler, ['HEAD'], $gates);
-    }
-
-    /**
-     * @param string $handler
-     * @return $this
-     */
-    public function parseHandler(string $handler)
-    {
-        $handlerParts = explode(self::CONTROLLER_SEPARATOR, $handler);
-        $controller = $handlerParts[0];
-        $action = $handlerParts[1];
-
-        $this->controllerName = self::CONTROLLERS_NAMESPACE . $controller;
-        $this->actionName = $action;
-
-        return $this;
-    }
-
-    /**
-     * @param array $methods
      * @return array
      */
-    public function prepareMethods(array $methods)
+    public function getArgs(string $path): array
     {
-        return array_map(function ($method) {
-            return strtoupper($method);
-        }, $methods);
+        $parameters = $this->getParams();
+
+        if (count($parameters) === 0) {
+            return [];
+        } else {
+            preg_match_all('#' . $this->getPattern() . '#', $path, $routeArgs);
+
+            return array_combine(
+                $this->getParams(),
+                ArrayHelper::flatten(array_splice($routeArgs, 1))
+            );
+        }
     }
 
     /**
-     * @param array $gates
      * @return array
      */
-    public function prepareGates(array $gates)
+    public function parseAction()
     {
-        return array_map(function ($gate) {
-            return self::GATES_NAMESPACE . ucfirst($gate . 'Gate');
-        }, $gates);
-    }
+        $actionParts = explode(Route::ACTION_DELIMITER, $this->action);
 
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    public function checkByRequest(Request $request)
-    {
-        return $this->path === $request->getPath() && in_array($request->getMethod(), $this->methods);
-    }
-
-    /**
-     * @param string $path
-     * @param string $method
-     * @return bool
-     */
-    public function checkByPathAndMethod(string $path, string $method)
-    {
-        return $this->path === $path && in_array($method, $this->methods);
+        return [
+            'controller' => Application::CONTROLLERS_NAMESPACE . $actionParts[0],
+            'action' => $actionParts[1],
+        ];
     }
 
     /**
      * @return string
      */
-    public function getPath()
+    public function getUri(): string
     {
-        return $this->path;
+        return $this->uri;
     }
 
     /**
-     * @param string $path
-     * @return $this
+     * @param string $uri
+     * @return Route
      */
-    public function setPath(string $path)
+    public function setUri(string $uri): Route
     {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getControllerName()
-    {
-        return $this->controllerName;
-    }
-
-    /**
-     * @param string $controllerName
-     * @return $this
-     */
-    public function setControllerName(string $controllerName)
-    {
-        $this->controllerName = $controllerName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionName()
-    {
-        return $this->actionName;
-    }
-
-    /**
-     * @param string $actionName
-     * @return $this
-     */
-    public function setActionName(string $actionName)
-    {
-        $this->actionName = $actionName;
+        $this->uri = trim($uri, '/');
 
         return $this;
     }
@@ -270,16 +115,16 @@ class Route
     /**
      * @return array
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->methods;
     }
 
     /**
-     * @param $methods
-     * @return $this
+     * @param array $methods
+     * @return Route
      */
-    public function setMethods($methods)
+    public function setMethods(array $methods): Route
     {
         $this->methods = $methods;
 
@@ -287,20 +132,20 @@ class Route
     }
 
     /**
-     * @return array
+     * @return Closure|string
      */
-    public function getGateNames()
+    public function getAction()
     {
-        return $this->gateNames;
+        return $this->action;
     }
 
     /**
-     * @param array $gateNames
-     * @return $this
+     * @param Closure|string $action
+     * @return Route
      */
-    public function setGateNames(array $gateNames)
+    public function setAction($action)
     {
-        $this->gateNames = $gateNames;
+        $this->action = $action;
 
         return $this;
     }

@@ -4,12 +4,10 @@ namespace PHPSoda\Container;
 
 use ArrayIterator;
 use Closure;
-use Countable;
-use IteratorAggregate;
-use Traversable;
 
 /**
  * Class Container
+ *
  * @package PHPSoda\Container
  */
 class Container implements ContainerInterface
@@ -21,60 +19,73 @@ class Container implements ContainerInterface
 
     /**
      * Container constructor.
+     *
+     * @param array $items
      */
-    public function __construct()
+    public function __construct(array $items = [])
     {
-        $this->items = [];
+        $this->items = $items;
     }
 
     /**
-     * @param string $key
-     * @return bool
+     * @return array
      */
-    public function has(string $key)
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param array $items
+     * @return Container
+     */
+    public function setItems(array $items): Container
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function has(string $key): bool
     {
         return array_key_exists($key, $this->items);
     }
 
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return mixed
+     * @inheritDoc
      */
-    public function get(string $key, $default = null) {
-        if (!$this->has($key)) {
+    public function get(string $key, $default = null)
+    {
+        if ($this->has($key)) {
+            if ($this->items[$key] instanceof Closure) {
+                return $this->items[$key]();
+            }
+
+            return $this->items[$key];
+        } elseif ($default instanceof Closure) {
+            return $default();
+        } else {
             return $default;
         }
-
-        $value = $this->items[$key];
-
-        if ($value instanceof Closure) {
-            return $value();
-        }
-
-        if ($default instanceof Closure) {
-            return $default();
-        }
-
-        return $value ?? $default;
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     * @return $this
+     * @inheritDoc
      */
-    public function set(string $key, $value) {
+    public function set(string $key, $value): ContainerInterface
+    {
         $this->items[$key] = $value;
 
         return $this;
     }
 
     /**
-     * @param string $key
-     * @return $this
+     * @inheritDoc
      */
-    public function clear(string $key)
+    public function clear(string $key): ContainerInterface
     {
         if ($this->has($key)) {
             unset($this->items[$key]);
@@ -84,44 +95,15 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param mixed $offset
-     * @return bool
+     * @inheritDoc
      */
-    public function offsetExists($offset)
+    public function jsonSerialize()
     {
-        return $this->has($offset);
+        return $this->items;
     }
 
     /**
-     * @param mixed $offset
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->items[$offset];
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->items[$offset] = $value;
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        if ($this->has($offset)) {
-            unset($this->items[$offset]);
-        }
-    }
-
-    /**
-     * @return ArrayIterator|Traversable
+     * @inheritDoc
      */
     public function getIterator()
     {
@@ -129,7 +111,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @return int
+     * @inheritDoc
      */
     public function count()
     {
