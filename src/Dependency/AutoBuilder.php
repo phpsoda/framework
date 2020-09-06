@@ -3,40 +3,30 @@
 namespace PHPSoda\Dependency;
 
 use Exception;
-use PHPSoda\Application;
+use PHPSoda\Container\Container;
+use ReflectionException;
 
 /**
- * Class Manager
+ * Class AutoBuilder
+ *
  * @package PHPSoda\Dependency
  */
-class Manager
+abstract class AutoBuilder extends Container
 {
     /**
-     * @var Application
-     */
-    private $app;
-
-    /**
-     * Manager constructor.
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * @param string $class
+     * @return mixed|null
+     * @throws ReflectionException
      * @throws Exception
      */
-    public function resolve(string $class)
+    public function build(string $class)
     {
         if (!class_exists($class)) {
             throw new Exception("$class class not found!");
         }
 
-        if ($this->app->has($class)) {
-            return $this->app->get($class);
+        if ($this->has($class)) {
+            return $this->get($class);
         }
 
         $inspector = new Inspector($class);
@@ -51,13 +41,13 @@ class Manager
 
         foreach ($parameters as $parameter) {
             if ($parameter->hasType() && !$parameter->getType()->isBuiltin()) {
-                if ($this->app->has($parameter->getType())) {
-                    $arguments[] = $this->app->get($parameter->getType());
+                if ($this->has($parameter->getType())) {
+                    $arguments[] = $this->get($parameter->getType());
                 } else {
-                    $arguments[] = $this->resolve($parameter->getType());
+                    $arguments[] = $this->build($parameter->getType());
                 }
             } else {
-                $arguments[] = $this->app->get($parameter->getName());
+                $arguments[] = $this->get($parameter->getName());
             }
         }
 

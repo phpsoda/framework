@@ -2,92 +2,119 @@
 
 namespace PHPSoda\Routing;
 
-use Exception;
-use PHPSoda\Application;
-use PHPSoda\Dependency\Manager;
-use PHPSoda\Http\JsonResponse;
+use Closure;
+use PHPSoda\Helpers\StringHelper;
 use PHPSoda\Http\Request;
-use PHPSoda\Http\Response;
 
 /**
  * Class Router
+ *
  * @package PHPSoda\Routing
  */
 class Router
 {
     /**
-     * @var RouteBag
+     * @var Route[]
      */
-    protected $routes;
-    /**
-     * @var Route
-     */
-    protected $currentRoute;
+    private $routes;
 
     /**
      * Router constructor.
-     * @param array $routes
+     *
+     * @param Route[] $routes
      */
     public function __construct(array $routes = [])
     {
-        $this->routes = new RouteBag($routes);
+        $this->routes = $routes;
     }
 
     /**
      * @param Request $request
-     * @return Response
-     * @throws Exception
+     * @return Route|null
      */
-    public function handle(Request $request): Response
+    public function match(Request $request): ?Route
     {
-        $this->currentRoute = $this->routes->getByRequest($request);
-
-        if ($this->currentRoute !== null) {
-            $dependencyManager = new Manager(Application::getInstance());
-
-            $controller = $dependencyManager->resolve($this->currentRoute->getControllerName());
-            $action = $this->currentRoute->getActionName();
-
-            if (!method_exists($controller, $action)) {
-                return new JsonResponse([
-                    'message' => "Action not found!",
-                ], 404);
+        foreach ($this->routes as $route) {
+            if (StringHelper::equals($route->getPattern(), $request->getPath())) {
+                return $route;
             }
-
-            foreach ($this->currentRoute->getGateNames() as $gateName) {
-                $gate = $dependencyManager->resolve($gateName);
-
-                if (!$gate->handle($request)) {
-                    return new JsonResponse([
-                        'message' => "Couldn't pass {$gateName}!",
-                    ], 403);
-                }
-            }
-
-            return $controller->$action($request);
         }
 
-        return new JsonResponse([
-            'message' => 'Route not found!',
-        ], 404);
+        return null;
     }
 
     /**
-     * @return RouteBag
-     */
-    public function getRoutes(): RouteBag
-    {
-        return $this->routes;
-    }
-
-    /**
-     * @param array $routes
+     * @param Route $route
      * @return $this
      */
-    public function setRoutes(array $routes): self
+    public function addRoute(Route $route): self
     {
-        $this->routes = new RouteBag();
+        $this->routes[] = $route;
 
         return $this;
+    }
+
+    /**
+     * @param string         $uri
+     * @param array          $methods
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function createRoute(string $uri, array $methods, $action): Route
+    {
+        $route = new Route($uri, $methods, $action);
+        $this->addRoute($route);
+
+        return $route;
+    }
+
+    /**
+     * @param string         $uri
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function get(string $uri, $action): Route
+    {
+        return $this->createRoute($uri, ['GET', 'HEAD'], $action);
+    }
+
+    /**
+     * @param string         $uri
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function post(string $uri, $action): Route
+    {
+        return $this->createRoute($uri, ['POST'], $action);
+    }
+
+    /**
+     * @param string         $uri
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function put(string $uri, $action): Route
+    {
+        return $this->createRoute($uri, ['PUT'], $action);
+    }
+
+    /**
+     * @param string         $uri
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function patch(string $uri, $action): Route
+    {
+        return $this->createRoute($uri, ['PATCH'], $action);
+    }
+
+    /**
+     * @param string         $uri
+     * @param Closure|string $action
+     * @return Route
+     */
+    public function delete(string $uri, $action): Route
+    {
+        return $this->createRoute($uri, ['DELETE'], $action);
     }
 }

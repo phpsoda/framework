@@ -17,7 +17,8 @@ class Inspector
     private $class;
 
     /**
-     * Resolver constructor.
+     * Inspector constructor.
+     *
      * @param string $class
      */
     public function __construct(string $class)

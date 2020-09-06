@@ -4,6 +4,7 @@ namespace PHPSoda\Http;
 
 /**
  * Class Response
+ *
  * @package PHPSoda\Http
  */
 class Response
@@ -53,9 +54,10 @@ class Response
 
     /**
      * Response constructor.
+     *
      * @param string $content
-     * @param int $status
-     * @param array $headers
+     * @param int    $status
+     * @param array  $headers
      */
     public function __construct(string $content = '', int $status = 200, array $headers = [])
     {
@@ -80,7 +82,9 @@ class Response
      */
     public function sendHeaders()
     {
-        if (headers_sent()) return $this;
+        if (headers_sent()) {
+            return $this;
+        }
 
         foreach ($this->headers as $key => $value) {
             header($key . ': ' . $value, $key === 'Content-Type', $this->statusCode);
