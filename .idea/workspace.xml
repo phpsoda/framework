@@ -20,14 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35fe1eb6-6707-4552-a0fc-8812e6740647" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../app/.idea/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/.idea/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/bootstrap/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/routing/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/routing/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/framework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/framework.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Helpers/ArrayHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helpers/ArrayHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/ApplicationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ApplicationTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +40,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../app" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4">
     <include_path>
