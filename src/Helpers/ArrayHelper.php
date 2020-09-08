@@ -32,6 +32,15 @@ abstract class ArrayHelper
      * @param array $array
      * @return array
      */
+    public static function values(array $array)
+    {
+        return array_values($array);
+    }
+
+    /**
+     * @param array $array
+     * @return array
+     */
     public static function flatten(array $array): array
     {
         $result = [];
