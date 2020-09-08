@@ -3,10 +3,7 @@
 namespace PHPSoda;
 
 use Closure;
-use phpDocumentor\Reflection\Types\This;
 use PHPSoda\Config\ArrayConfig;
-use PHPSoda\Container\Container;
-use PHPSoda\Container\ContainerInterface;
 use PHPSoda\Dependency\AutoBuilder;
 use PHPSoda\Http\Request;
 use PHPSoda\Routing\Router;
