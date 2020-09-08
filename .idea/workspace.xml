@@ -21,7 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="35fe1eb6-6707-4552-a0fc-8812e6740647" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../app/.idea/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/.idea/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/bootstrap/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/routing/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/routing/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/framework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/framework.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Application.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Helpers/ArrayHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helpers/ArrayHelper.php" afterDir="false" />
@@ -43,9 +46,9 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../app" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="Ubuntu 20.04">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
@@ -98,7 +101,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../app" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -142,7 +145,7 @@
       <workItem from="1599312709360" duration="36930000" />
       <workItem from="1599566258273" duration="866000" />
       <workItem from="1599580020288" duration="13000" />
-      <workItem from="1599592036772" duration="916000" />
+      <workItem from="1599592036772" duration="572000" />
     </task>
     <servers />
   </component>
@@ -219,10 +222,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="766" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599338819305" />
-    <state x="461" y="165" width="1136" height="710" key="SettingsEditor" timestamp="1599349130397">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="461" y="196" width="1136" height="726" key="SettingsEditor" timestamp="1599594372975">
+      <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="461" y="165" width="1136" height="710" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599349130397" />
+    <state x="461" y="196" width="1136" height="726" key="SettingsEditor/0.29.1920.1051@0.29.1920.1051" timestamp="1599594372975" />
     <state x="729" y="328" width="484" height="475" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1599336455369">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -42,18 +42,25 @@ class Application extends AutoBuilder
         parent::__construct();
 
         $this->setBasePath($basePath);
+        $this->setPaths();
+        
+        $this->set(self::class, $this);
+        $this->set(Router::class, new Router());
+    }
+
+    public function setPaths()
+    {
+        $this->set('path.base', $this->getBasePath());
+        $this->set('path.config', $this->getConfigPath());
     }
 
     /**
      * @param string $basePath
-     * @return Application
      */
-    public static function initialize(string $basePath = ''): Application
+    public static function initialize(string $basePath = '')
     {
         self::$instance = new static($basePath);
         self::$initialized = true;
-
-        return self::$instance;
     }
 
     /**
@@ -61,6 +68,10 @@ class Application extends AutoBuilder
      */
     public static function getInstance(): Application
     {
+        if (!self::$initialized) {
+            self::initialize();
+        }
+
         return self::$instance;
     }
 
@@ -82,7 +93,7 @@ class Application extends AutoBuilder
         /**
          * @var Router $router
          */
-        $router = $this->get('router');
+        $router = $this->get(Router::class);
         $route = $router->match($request);
         $action = $route->getAction();
 
