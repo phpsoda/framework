@@ -3,9 +3,9 @@
 namespace PHPSoda;
 
 use Closure;
-use PHPSoda\Config\ArrayConfig;
 use PHPSoda\Dependency\AutoBuilder;
 use PHPSoda\Http\Request;
+use PHPSoda\Parsing\ArrayParser;
 use PHPSoda\Routing\Router;
 use ReflectionException;
 
@@ -115,7 +115,7 @@ class Application extends AutoBuilder
      */
     public function loadConfig(string $name)
     {
-        $this->set('config.' . $name, ArrayConfig::parse($this->getConfigFilePath($name . '.php')));
+        $this->set('config.' . $name, ArrayParser::parse($this->getConfigFilePath($name . '.php')));
     }
 
     /**
