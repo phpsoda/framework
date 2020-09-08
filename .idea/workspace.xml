@@ -20,8 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35fe1eb6-6707-4552-a0fc-8812e6740647" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/framework.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php-test-framework.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ApplicationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ApplicationTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,13 +100,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.jetbrains.php.lang.actions.generation.PhpGenerateFieldAccessorHandlerBase$MyMemberChooser.fluent.setters.last.selected" value="true" />
     <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Parsing" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Parsing" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\Php\phpsoda\framework\tests\Unit" />
     </key>
@@ -113,8 +124,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="PHP Script.index.php" />
       <item itemvalue="PHPUnit.tests" />
+      <item itemvalue="PHP Script.index.php" />
     </list>
     <recent_temporary>
       <list>
@@ -175,14 +186,16 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="686" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599318112334" />
-    <state x="425" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1599351300839">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="425" y="29" width="590" height="695" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1599605889903">
+      <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="425" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599351300839" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599353064870">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="425" y="29" width="590" height="695" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.29.1920.1051@0.29.1920.1051" timestamp="1599605889903" />
+    <state x="690" y="307" width="524" height="480" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599605036531">
+      <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599353064870" />
+    <state x="690" y="307" width="524" height="480" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.29.1920.1051@0.29.1920.1051" timestamp="1599605036531" />
     <state x="740" y="307" width="424" height="480" key="FileChooserDialogImpl" timestamp="1599566261926">
       <screen x="0" y="29" width="1920" height="1051" />
     </state>
@@ -204,10 +217,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599354255456" />
-    <state x="727" y="243" key="NewPhpClassDialog" timestamp="1599341084764">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="727" y="275" width="641" height="557" key="NewPhpClassDialog" timestamp="1599605017414">
+      <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="727" y="243" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599341084764" />
+    <state x="727" y="275" width="641" height="557" key="NewPhpClassDialog/0.29.1920.1051@0.29.1920.1051" timestamp="1599605017414" />
     <state x="794" y="443" key="NewPhpFileDialog" timestamp="1599341091835">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -233,9 +247,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599290319666" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1599349336608">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="623" y="256" width="672" height="686" key="search.everywhere.popup" timestamp="1599607474236">
+      <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599349336608" />
+    <state x="623" y="256" width="672" height="686" key="search.everywhere.popup/0.29.1920.1051@0.29.1920.1051" timestamp="1599607474236" />
   </component>
 </project>
