@@ -70,16 +70,6 @@ class Response
     /**
      * @return $this
      */
-    public function sendContent()
-    {
-        echo $this->content;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
     public function sendHeaders()
     {
         if (headers_sent()) {
@@ -98,10 +88,20 @@ class Response
     /**
      * @return $this
      */
+    public function sendContent()
+    {
+        echo $this->content;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function send()
     {
-        $this->sendContent();
         $this->sendHeaders();
+        $this->sendContent();
 
         return $this;
     }
